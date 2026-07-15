@@ -37,22 +37,22 @@ export function AuthView() {
             <BriefcaseBusiness size={22} />
           </span>
           <div>
-            <p className="eyebrow">Montreal Internship Tracker</p>
-            <h1>Run a tighter SWE internship search.</h1>
+            <p className="eyebrow">My Internship Tracker</p>
+            <h1>Run a tighter personalized internship search.</h1>
           </div>
         </div>
         <div className="auth-stats" aria-label="Tracker highlights">
           <div>
-            <strong>JWT</strong>
-            <span>secure sessions</span>
+            <strong>Pipeline</strong>
+            <span>track every stage</span>
           </div>
           <div>
-            <strong>Prisma</strong>
-            <span>typed data layer</span>
+            <strong>Follow-ups</strong>
+            <span>never miss a next step</span>
           </div>
           <div>
-            <strong>Zod</strong>
-            <span>password rules</span>
+            <strong>Insights</strong>
+            <span>see what needs attention</span>
           </div>
         </div>
       </section>
@@ -121,4 +121,3 @@ export function AuthView() {
     </main>
   );
 }
-

@@ -22,7 +22,7 @@ type Props = {
 const initialState: ApplicationPayload = {
   role: "",
   companyName: "",
-  companyLocation: "Montreal, QC",
+  companyLocation: "Remote / Hybrid / City",
   companyIndustry: "Technology",
   status: "SAVED",
   workMode: "HYBRID",
@@ -225,4 +225,3 @@ export function statusLabel(status: ApplicationStatus) {
 export function modeLabel(mode: WorkMode) {
   return mode[0] + mode.slice(1).toLowerCase();
 }
-

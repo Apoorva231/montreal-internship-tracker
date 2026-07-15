@@ -113,8 +113,8 @@ export function Dashboard() {
             <BriefcaseBusiness size={20} />
           </span>
           <div>
-            <p className="eyebrow">{user?.city ?? "Montreal, QC"}</p>
-            <h1>Internship Tracker</h1>
+            <p className="eyebrow">{user?.city ?? "Personal workspace"}</p>
+            <h1>My Internship Tracker</h1>
           </div>
         </div>
         <div className="header-actions">
