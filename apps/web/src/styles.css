@@ -26,6 +26,7 @@
 body {
   margin: 0;
   min-width: 320px;
+  overflow-x: hidden;
 }
 
 button,
@@ -432,6 +433,7 @@ textarea:focus {
   grid-template-columns: 360px minmax(0, 1fr);
   gap: 20px;
   align-items: start;
+  min-width: 0;
 }
 
 .left-rail,
@@ -519,12 +521,9 @@ textarea:focus {
   width: 100%;
   max-width: 100%;
   display: grid;
-  grid-template-columns: repeat(7, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 10px;
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding-bottom: 6px;
-  scroll-snap-type: x proximity;
+  overflow: hidden;
 }
 
 .board-column {
@@ -954,7 +953,7 @@ textarea:focus {
   }
 
   .application-board {
-    grid-template-columns: repeat(7, minmax(220px, 82vw));
+    grid-template-columns: 1fr;
   }
 }
 
