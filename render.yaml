@@ -4,8 +4,7 @@ services:
     runtime: node
     plan: free
     buildCommand: pnpm install --frozen-lockfile && pnpm db:generate && pnpm build
-    preDeployCommand: pnpm db:deploy
-    startCommand: pnpm --filter @mit/api start
+    startCommand: pnpm db:deploy && pnpm --filter @mit/api start
     healthCheckPath: /api/health
     autoDeployTrigger: commit
     envVars:
