@@ -1,5 +1,14 @@
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
-import { BriefcaseBusiness, CalendarDays, LogOut, Search, Target, Trophy } from "lucide-react";
+import {
+  BriefcaseBusiness,
+  CalendarDays,
+  Columns3,
+  List,
+  LogOut,
+  Search,
+  Target,
+  Trophy
+} from "lucide-react";
 import { api } from "../api/client";
 import type {
   Application,
@@ -10,6 +19,7 @@ import type {
   Task
 } from "../api/types";
 import { useAuth } from "../features/auth/AuthContext";
+import { ApplicationBoard } from "./ApplicationBoard";
 import { ApplicationForm } from "./ApplicationForm";
 import { ApplicationList } from "./ApplicationList";
 
@@ -30,6 +40,7 @@ export function Dashboard() {
   const [insights, setInsights] = useState<Insights | null>(null);
   const [status, setStatus] = useState<ApplicationStatus | "ALL">("ALL");
   const [search, setSearch] = useState("");
+  const [viewMode, setViewMode] = useState<"board" | "list">("board");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
@@ -41,7 +52,7 @@ export function Dashboard() {
     try {
       const [applicationResult, companyResult, insightResult] = await Promise.all([
         api.applications(token, {
-          status: status === "ALL" ? undefined : status,
+          status: viewMode === "board" || status === "ALL" ? undefined : status,
           search: search || undefined
         }),
         api.companies(token),
@@ -55,7 +66,7 @@ export function Dashboard() {
     } finally {
       setIsLoading(false);
     }
-  }, [search, status, token]);
+  }, [search, status, token, viewMode]);
 
   useEffect(() => {
     void loadWorkspace();
@@ -180,6 +191,27 @@ export function Dashboard() {
                 placeholder="Search roles, companies, locations"
               />
             </div>
+            <div className="view-toggle" aria-label="View mode">
+              <button
+                type="button"
+                className={viewMode === "board" ? "active" : ""}
+                onClick={() => {
+                  setViewMode("board");
+                  setStatus("ALL");
+                }}
+              >
+                <Columns3 size={16} />
+                Board
+              </button>
+              <button
+                type="button"
+                className={viewMode === "list" ? "active" : ""}
+                onClick={() => setViewMode("list")}
+              >
+                <List size={16} />
+                List
+              </button>
+            </div>
             <div className="filter-tabs" aria-label="Status filter">
               {statusFilters.map((filter) => (
                 <button
@@ -209,6 +241,13 @@ export function Dashboard() {
               <div className="spinner" aria-hidden="true" />
               <span>Refreshing tracker</span>
             </section>
+          ) : viewMode === "board" ? (
+            <ApplicationBoard
+              applications={applications}
+              onAddTask={addTask}
+              onDelete={deleteApplication}
+              onStatusChange={updateStatus}
+            />
           ) : (
             <ApplicationList
               applications={applications}
