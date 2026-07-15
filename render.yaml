@@ -3,7 +3,7 @@ services:
     name: montreal-internship-tracker
     runtime: node
     plan: free
-    buildCommand: pnpm install --frozen-lockfile && pnpm db:generate && pnpm build
+    buildCommand: pnpm install --frozen-lockfile --prod=false && pnpm db:generate && pnpm build
     startCommand: pnpm db:deploy && pnpm --filter @mit/api start
     healthCheckPath: /api/health
     autoDeployTrigger: commit
@@ -24,4 +24,3 @@ databases:
     plan: free
     databaseName: internship_tracker
     user: internship_tracker_user
-
