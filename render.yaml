@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: montreal-internship-tracker
+    runtime: node
+    plan: free
+    buildCommand: pnpm install --frozen-lockfile && pnpm db:generate && pnpm build
+    preDeployCommand: pnpm db:deploy
+    startCommand: pnpm --filter @mit/api start
+    healthCheckPath: /api/health
+    autoDeployTrigger: commit
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: montreal-internship-tracker-db
+          property: connectionString
+      - key: CLIENT_ORIGIN
+        value: https://montreal-internship-tracker.onrender.com
+
+databases:
+  - name: montreal-internship-tracker-db
+    plan: free
+    databaseName: internship_tracker
+    user: internship_tracker_user
+

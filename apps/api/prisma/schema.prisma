@@ -1,0 +1,86 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String        @id @default(cuid())
+  email        String        @unique
+  name         String
+  passwordHash String
+  city         String        @default("Montreal, QC")
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  applications Application[]
+}
+
+model Company {
+  id           String        @id @default(cuid())
+  name         String
+  location     String        @default("Montreal, QC")
+  website      String?
+  industry     String        @default("Technology")
+  size         String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  applications Application[]
+
+  @@unique([name, location])
+}
+
+model Application {
+  id           String            @id @default(cuid())
+  role         String
+  status       ApplicationStatus @default(SAVED)
+  workMode     WorkMode          @default(HYBRID)
+  priority     Int               @default(2)
+  deadline     DateTime?
+  jobUrl       String?
+  salaryRange  String?
+  contactName  String?
+  contactEmail String?
+  notes        String?
+  appliedAt    DateTime?
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  userId       String
+  user         User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  companyId    String
+  company      Company           @relation(fields: [companyId], references: [id])
+  tasks        Task[]
+
+  @@index([userId, status])
+  @@index([companyId])
+}
+
+model Task {
+  id            String      @id @default(cuid())
+  title         String
+  dueDate       DateTime?
+  completed     Boolean     @default(false)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  applicationId String
+  application   Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+}
+
+enum ApplicationStatus {
+  SAVED
+  APPLIED
+  INTERVIEW
+  TECHNICAL
+  OFFER
+  REJECTED
+  ARCHIVED
+}
+
+enum WorkMode {
+  REMOTE
+  HYBRID
+  ONSITE
+}
+

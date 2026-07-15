@@ -1,0 +1,25 @@
+{
+  "name": "montreal-internship-tracker",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Portfolio-ready full stack internship tracker for SWE roles in Montreal and Canada.",
+  "workspaces": [
+    "apps/api",
+    "apps/web"
+  ],
+  "packageManager": "pnpm@11.7.0",
+  "scripts": {
+    "dev": "concurrently \"pnpm --filter @mit/api dev\" \"pnpm --filter @mit/web dev\"",
+    "dev:api": "pnpm --filter @mit/api dev",
+    "dev:web": "pnpm --filter @mit/web dev",
+    "build": "pnpm --filter @mit/api build && pnpm --filter @mit/web build",
+    "typecheck": "pnpm --filter @mit/api typecheck && pnpm --filter @mit/web typecheck",
+    "db:generate": "pnpm --filter @mit/api prisma:generate",
+    "db:migrate": "pnpm --filter @mit/api prisma:migrate",
+    "db:deploy": "pnpm --filter @mit/api exec prisma migrate deploy",
+    "db:seed": "pnpm --filter @mit/api seed"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
