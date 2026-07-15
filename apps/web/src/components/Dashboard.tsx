@@ -40,7 +40,7 @@ export function Dashboard() {
   const [insights, setInsights] = useState<Insights | null>(null);
   const [status, setStatus] = useState<ApplicationStatus | "ALL">("ALL");
   const [search, setSearch] = useState("");
-  const [viewMode, setViewMode] = useState<"board" | "list">("board");
+  const [viewMode, setViewMode] = useState<"board" | "list">("list");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
